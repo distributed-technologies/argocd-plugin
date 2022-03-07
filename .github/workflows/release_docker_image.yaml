@@ -22,9 +22,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Get chart version
+      - name: Test manifest generator
         shell: bash
-        run: m/test/test.sh
+        run: ./test/test.sh
 
   # define job to build and publish docker image
   build-and-push-docker-image:
