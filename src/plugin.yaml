@@ -1,0 +1,7 @@
+version: v1.0
+generate:
+  command: ["/plugin/generate_manifest.sh"]
+discover:
+  fileName: "./*.yaml"
+allowConcurrency: true
+lockRepo: false

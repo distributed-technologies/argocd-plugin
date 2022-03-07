@@ -1,0 +1,64 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+
+defaults:
+
+  version_increment_check:
+    name: Container version increment check
+    if: github.event_name == 'pull_request'
+    uses: Energinet-DataHub/.github/.github/workflows/version-increment-check.yaml@main
+    with:
+      yaml_file: build.yaml
+      yaml_path: container_version
+
+  unittest_generator:
+    name: Test if generator creates manifest as expected
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get chart version
+        shell: bash
+        run: m/test/test.sh
+
+  # define job to build and publish docker image
+  build-and-push-docker-image:
+    name: Build Docker image and push to repositories
+    needs:
+      - unittest_generator
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get chart version
+        id: get_semver
+        uses: Energinet-DataHub/.github/.github/actions/get-semver@main
+        with:
+          yaml_file: build.yaml
+          yaml_path: container_version
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build image and push to Docker Hub and GitHub Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          tags: |
+            ghcr.io/${{github.repository}}/helm-overdrive:${{ steps.get_semver.outputs.semver }}
+          push: true
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
