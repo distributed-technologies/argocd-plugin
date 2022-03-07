@@ -39,6 +39,13 @@ jobs:
 
       - name: Get chart version
         id: get_semver
+        uses: Energinet-DataHub/.github/.github/actions/yamlpath-install@main
+        with:
+          yaml_file: build.yaml
+          yaml_path: container_version
+
+      - name: Get chart version
+        id: get_semver
         uses: Energinet-DataHub/.github/.github/actions/get-semver@main
         with:
           yaml_file: build.yaml
