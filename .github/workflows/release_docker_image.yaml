@@ -37,12 +37,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Get chart version
-        id: get_semver
+      - name: Install yamlpath
+        id: install yamlpath
         uses: Energinet-DataHub/.github/.github/actions/yamlpath-install@main
-        with:
-          yaml_file: build.yaml
-          yaml_path: container_version
 
       - name: Get chart version
         id: get_semver
