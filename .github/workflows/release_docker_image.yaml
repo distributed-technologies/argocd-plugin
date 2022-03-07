@@ -5,8 +5,7 @@ on:
     branches: [main]
   pull_request: {}
 
-defaults:
-
+jobs:
   version_increment_check:
     name: Container version increment check
     if: github.event_name == 'pull_request'
