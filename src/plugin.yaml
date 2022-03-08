@@ -3,9 +3,9 @@ kind: ConfigManagementPlugin
 metadata:
   name: helm-overdrive
 spec:
-  version: v0.1
+  version: v1.0
   generate:
-    command: [/home/argocd/generate_manifest.sh]
+    command: [sh, -c, '/home/argocd/generate_manifest.sh']
   discover:
     fileName: "*"
   allowConcurrency: true
