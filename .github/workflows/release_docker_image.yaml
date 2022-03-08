@@ -11,8 +11,8 @@ jobs:
     if: github.event_name == 'pull_request'
     uses: Energinet-DataHub/.github/.github/workflows/version-increment-check.yaml@main
     with:
-      yaml_file: build.yaml
-      yaml_path: container_version
+      yaml_file: src/plugin.yaml
+      yaml_path: spec.version
 
   test_and_build:
     name: Build, test and release image
@@ -26,8 +26,8 @@ jobs:
         id: get_semver
         uses: Energinet-DataHub/.github/.github/actions/get-semver@main
         with:
-          yaml_file: build.yaml
-          yaml_path: container_version
+          yaml_file: src/plugin.yaml
+          yaml_path: spec.version
 
       - name: Generate image name
         id: create_image_name

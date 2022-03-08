@@ -76,8 +76,8 @@ fi
 
     helm create temp > /dev/null
     rm -r ./temp/templates/*
-    cp -r ${_TEMPLATES} ./temp/templates/
-    cp ${_VALUES} ./temp/values.yaml
+    cp -r ${_TEMPLATES} ./temp/templates/ 2> /dev/null
+    cp ${_VALUES} ./temp/values.yaml 2> /dev/null
     helm template temp
     rm temp -r > /dev/null
   }
@@ -120,11 +120,11 @@ fi
     mkdir -p ${WORK_ADD_RES}
   
     if [[ "$BASE_ADDITIONAL_RESOURCES" ]]; then
-      cp -r ${BASE_ADDITIONAL_RESOURCES}/. ${WORK_ADD_RES}
+      cp -r ${BASE_ADDITIONAL_RESOURCES}/. ${WORK_ADD_RES} 2> /dev/null
     fi
 
     if [[ "$ENV_ADDITIONAL_RESOURCES" ]]; then
-      cp -r ${ENV_ADDITIONAL_RESOURCES}/. ${WORK_ADD_RES}
+      cp -r ${ENV_ADDITIONAL_RESOURCES}/. ${WORK_ADD_RES} 2> /dev/null
     fi
     template ${WORK_ADD_RES} ${VALUES} >> ${MANIFEST}
   fi
