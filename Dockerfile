@@ -10,8 +10,10 @@ RUN apt-get update &&\
     apt-get install helm --yes &&\
     pip3 install yamlpath
 
-USER 999
-WORKDIR /plugin
+RUN useradd -u 999 -ms /bin/bash overdrive
+
+WORKDIR /home/overdrive
+USER overdrive
 
 COPY src/plugin.yaml /home/argocd/cmp-server/config/plugin.yaml
-COPY src/generate_manifest.sh /plugin/generate_manifest.sh
+COPY src/generate_manifest.sh ./generate_manifest.sh

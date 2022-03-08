@@ -22,7 +22,7 @@
 
 # Internal env variables
 WORK_DIR=_work
-WORK_ADD_RES=${WORK_DIR}/additional_resources
+WORK_ADD_RES=${WORK_DIR}/add_res
 
 BASE_VALUES_TEMPLATED=${WORK_DIR}/base_VALUES.yaml
 ENV_VALUES_TEMPLATED=${WORK_DIR}/env_VALUES.yaml
@@ -76,7 +76,7 @@ fi
 
     helm create temp > /dev/null
     rm -r ./temp/templates/*
-    cp ${_TEMPLATES} ./temp/templates/
+    cp -r ${_TEMPLATES} ./temp/templates/
     cp ${_VALUES} ./temp/values.yaml
     helm template temp
     rm temp -r > /dev/null
@@ -106,20 +106,26 @@ fi
   rm ${TEMP_VALUES}
 
   # Template the helm chart with the generated values.yaml
-  helm template ${ARGOCD_APP_NAME} ${ARGOCD_APP_SOURCE_PATH} \
-      --repo ${ARGOCD_APP_SOURCE_REPO_URL}  \
+  helm template ${ARGOCD_APP_NAME} ${CHART_NAME} \
+      --repo ${HELM_REPO}  \
       --namespace ${ARGOCD_APP_NAMESPACE} \
-      --version ${ARGOCD_APP_SOURCE_TARGET_REVISION} \
+      --version ${CHART_VERSION} \
       --values ${VALUES} \
       > ${MANIFEST}
 
   # Copy extra files into common folder, and template and concat onto manifest
   # TODO: ignore extra files if paths are empty.
 
-  if [[ "$BASE_ADDITIONAL_RESOURCES" ]]; then
+  if [[ "$BASE_ADDITIONAL_RESOURCES" || "$ENV_ADDITIONAL_RESOURCES" ]]; then
     mkdir -p ${WORK_ADD_RES}
-    cp -r ${BASE_ADDITIONAL_RESOURCES}/* ${WORK_ADD_RES}
-    cp -r ${ENV_ADDITIONAL_RESOURCES}/* ${WORK_ADD_RES}
+  
+    if [[ "$BASE_ADDITIONAL_RESOURCES" ]]; then
+      cp -r ${BASE_ADDITIONAL_RESOURCES}/. ${WORK_ADD_RES}
+    fi
+
+    if [[ "$ENV_ADDITIONAL_RESOURCES" ]]; then
+      cp -r ${ENV_ADDITIONAL_RESOURCES}/. ${WORK_ADD_RES}
+    fi
     template ${WORK_ADD_RES} ${VALUES} >> ${MANIFEST}
   fi
   # Output manifest on STDOUT
