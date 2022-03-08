@@ -1,6 +1,6 @@
 version: v1.0
 generate:
-  command: ["/plugin/generate_manifest.sh"]
+  command: ["generate_manifest"]
 discover:
   fileName: "./*.yaml"
 allowConcurrency: true

@@ -44,7 +44,7 @@ jobs:
       - name: Test generator with additional yaml files
         shell: bash
         run: |
-          docker run --env-file ./test/env_with_add.env --volume ${{ github.workspace }}/test:/plugin/test ${{ steps.create_image_name.outputs.image_name }} /plugin/generate_manifest.sh > res_with_add.yaml
+          docker run --env-file ./test/env_with_add.env --volume ${{ github.workspace }}/test:/plugin/test ${{ steps.create_image_name.outputs.image_name }} generate_manifest > res_with_add.yaml
           DIFF=$(diff res_with_add.yaml expected_with_add) 
           if [ "$DIFF" != "" ] 
           then
@@ -55,7 +55,7 @@ jobs:
       - name: Test generator without additional yaml files
         shell: bash
         run: |
-          docker run --env-file ./test/env_without_add.env --volume ${{ github.workspace }}/test:/plugin/test ${{ steps.create_image_name.outputs.image_name }} /plugin/generate_manifest.sh > res_without_add.yaml
+          docker run --env-file ./test/env_without_add.env --volume ${{ github.workspace }}/test:/plugin/test ${{ steps.create_image_name.outputs.image_name }} generate_manifest > res_without_add.yaml
           DIFF=$(diff res_without_add.yaml expected_without_add) 
           if [ "$DIFF" != "" ] 
           then
