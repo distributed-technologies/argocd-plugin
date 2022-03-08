@@ -45,7 +45,11 @@ jobs:
         shell: bash
         run: |
           docker run --rm -t --env-file ./test/env_with_add.env --volume ${{ github.workspace }}/test:/home/overdrive/test ${{ steps.create_image_name.outputs.image_name }} ./generate_manifest.sh > res_with_add.yaml
-          DIFF=$(diff res_with_add.yaml  test/expected_with_add.yaml) 
+
+      - name: Compare result
+        shell: bash
+        run: |
+          DIFF=$(diff -w res_with_add.yaml  test/expected_with_add.yaml) 
           if [ "$DIFF" != "" ] 
           then
             echo "::error file=test/env_with_add.yaml,title=Did not return the expected manifest::$DIFF"
@@ -55,7 +59,7 @@ jobs:
         shell: bash
         run: |
           docker run --rm -t --env-file ./test/env_without_add.env --volume ${{ github.workspace }}/test:/home/overdrive/test ${{ steps.create_image_name.outputs.image_name }} ./generate_manifest.sh > res_without_add.yaml
-          DIFF=$(diff res_without_add.yaml test/expected_without_add.yaml) 
+          DIFF=$(diff -w res_without_add.yaml test/expected_without_add.yaml) 
           if [ "$DIFF" != "" ] 
           then
             echo "::error file=test/expected_without_add.yaml,title=Did not return the expected manifest::$DIFF"
