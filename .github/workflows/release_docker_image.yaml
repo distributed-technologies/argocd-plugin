@@ -24,7 +24,7 @@ jobs:
 
       - name: Get container version
         id: get_semver
-        uses: Energinet-DataHub/.github/.github/actions/get-semver@main
+        uses: Energinet-DataHub/.github/.github/actions/get-semver@get_semver_default
         with:
           yaml_file: src/plugin.yaml
           yaml_path: spec.version
