@@ -14,4 +14,4 @@ USER 999
 WORKDIR /plugin
 
 COPY src/plugin.yaml /home/argocd/cmp-server/config/plugin.yaml
-COPY src/generate_manifest.sh /usr/bin/generate_manifest
+COPY src/generate_manifest.sh /plugin/generate_manifest.sh

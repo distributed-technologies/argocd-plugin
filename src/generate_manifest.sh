@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # # Standard ArgoCD Build Environment variables 
