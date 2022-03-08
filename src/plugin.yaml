@@ -7,6 +7,6 @@ spec:
   generate:
     command: ["/home/overdrive/generate_manifest.sh"]
   discover:
-    fileName: "./*.yaml"
+    fileName: "*"
   allowConcurrency: true
   lockRepo: false
