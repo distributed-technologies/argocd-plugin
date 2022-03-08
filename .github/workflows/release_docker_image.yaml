@@ -48,9 +48,7 @@ jobs:
           DIFF=$(diff res_with_add.yaml  test/expected_with_add.yaml) 
           if [ "$DIFF" != "" ] 
           then
-            echo "Image did not return the expected manifest"
-            echo "DIFF: $DIFF"
-            exit 1
+            echo "::error file=test/env_with_add.yaml,title=Did not return the expected manifest::$DIFF"
           fi
 
       - name: Test generator without additional yaml files
@@ -60,9 +58,7 @@ jobs:
           DIFF=$(diff res_without_add.yaml test/expected_without_add.yaml) 
           if [ "$DIFF" != "" ] 
           then
-            echo "Image did not return the expected manifest"
-            echo "DIFF: $DIFF"
-            exit 1
+            echo "::error file=test/expected_without_add.yaml,title=Did not return the expected manifest::$DIFF"
           fi
 
       - name: Login to GitHub Container Registry
