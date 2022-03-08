@@ -1,7 +1,12 @@
-version: v1.0
-generate:
-  command: ["/home/overdrive/generate_manifest.sh"]
-discover:
-  fileName: "./*.yaml"
-allowConcurrency: true
-lockRepo: false
+apiVersion: argoproj.io/v1alpha1
+kind: ConfigManagementPlugin
+metadata:
+  name: helm-overdrive
+spec:
+  version: v0.1
+  generate:
+    command: ["/home/overdrive/generate_manifest.sh"]
+  discover:
+    fileName: "./*.yaml"
+  allowConcurrency: true
+  lockRepo: false
