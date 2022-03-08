@@ -5,7 +5,7 @@ metadata:
 spec:
   version: v0.1
   generate:
-    command: ["/home/overdrive/generate_manifest.sh"]
+    command: ["/home/argocd/generate_manifest.sh"]
   discover:
     fileName: "*"
   allowConcurrency: true
