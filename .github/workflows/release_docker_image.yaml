@@ -49,6 +49,7 @@ jobs:
           if [ "$DIFF" != "" ] 
           then
             echo "Image did not return the expected manifest"
+            echo "DIFF: $DIFF"
             exit 1
           fi
 
@@ -60,6 +61,7 @@ jobs:
           if [ "$DIFF" != "" ] 
           then
             echo "Image did not return the expected manifest"
+            echo "DIFF: $DIFF"
             exit 1
           fi
 
