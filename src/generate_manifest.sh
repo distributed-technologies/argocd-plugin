@@ -92,7 +92,12 @@ yaml-merge -S ${BASE_GLOBAL} ${ENV_GLOBAL} > ${GLOBAL}
 template ${BASE_VALUES} ${GLOBAL} > ${BASE_VALUES_TEMPLATED}
 
 # Template env/values.yaml from globals
-template ${ENV_VALUES} ${GLOBAL} > ${ENV_VALUES_TEMPLATED}
+if test -f "${ENV_VALUES}"
+then
+  template ${ENV_VALUES} ${GLOBAL} > ${ENV_VALUES_TEMPLATED}
+else
+  touch ${ENV_VALUES_TEMPLATED}
+fi
 
 # Merge base and env values.yaml, and remove temp files
 yaml-merge -S ${BASE_VALUES_TEMPLATED} ${ENV_VALUES_TEMPLATED} > ${TEMP_VALUES}

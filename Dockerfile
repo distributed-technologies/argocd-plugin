@@ -14,7 +14,6 @@ RUN useradd -u 999 -ms /bin/bash argocd
 
 WORKDIR /home/argocd
 USER argocd
-ENV HELM_CACHE_HOME=/home/argocd/.cache
 
 COPY src/plugin.yaml /home/argocd/cmp-server/config/plugin.yaml
 COPY src/generate_manifest.sh ./generate_manifest.sh
