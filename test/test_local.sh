@@ -10,6 +10,7 @@ then
 else
     echo "test with additional ✅"
 fi
+rm res_with_add.yaml
 
 docker run --rm -t --env-file ./test/env_without_add.env --volume /home/martin/source/energinet-datahub/argocd-plugin/test:/home/argocd/test helm-overdrive:test sh -c '/home/argocd/generate_manifest.sh'> res_without_add.yaml
 DIFF=$(diff -w res_without_add.yaml test/expected_without_add.yaml) 
@@ -19,3 +20,4 @@ then
 else
     echo "test without additional ✅"
 fi
+rm res_without_add.yaml
